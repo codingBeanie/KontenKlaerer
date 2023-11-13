@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>Konten-Klärer</title>
+    <link rel="stylesheet" type="text/css" href="{%static 'css/styles.css' %}?v=123">
+</head>
+<body>
+    <div class="sidebar">
+        <a href="#home">CSV-Management</a>
+        <a href="#news">Kategorien</a>
+        <a href="#contact">Zuordnungen</a>
+        <a href="#about">Statisitken</a>
+    </div>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
