@@ -1,18 +1,62 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <title>Konten-Klärer</title>
-    <link rel="stylesheet" type="text/css" href="{%static 'css/styles.css' %}?v=123">
+    <link rel="stylesheet" type="text/css" href="{%static 'css/styles.css' %}?v=1001">
+    <link rel="stylesheet" href="{%static 'webfonts/uicons-regular-rounded.css' %}?v=1001">
 </head>
+
 <body>
-    <div class="sidebar">
-        <a href="#home">CSV-Management</a>
-        <a href="#news">Kategorien</a>
-        <a href="#contact">Zuordnungen</a>
-        <a href="#about">Statisitken</a>
+    <div class="grid">
+        <div class="logo">
+            <div class="logo-img">
+                <div class="logo-k1">K</div>
+                <div class="logo-k2">K</div>
+            </div>
+
+            <div class="logo-text">Konten Klärer</div>
+
+        </div>
+        <div class="navbar">
+            <a href="#home">
+                <div class="link-box">
+                    <div class="link-logo"><i class="fi-rr-folder-upload"></i></div>
+                    <div class="link-text">
+                        Daten</div>
+                </div>
+            </a>
+            <a href="#home">
+                <div class="link-box">
+                    <div class="link-logo"><i class="fi-rr-folder-tree"></i></div>
+                    <div class="link-text">Kategorien</div>
+                </div>
+            </a>
+            <a href="#home">
+                <div class="link-box">
+                    <div class="link-logo"><i class=" fi-rr-money-check-edit-alt"></i></div>
+                    <div class="link-text">Zuordnungen</div>
+                </div>
+            </a>
+
+            <a href="#home">
+                <div class="link-box">
+                    <div class="link-logo"><i class="fi-rr-chart-histogram"></i></div>
+                    <div class=" link-text">Statistiken</div>
+                </div>
+            </a>
+
+
+
+
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
     </div>
-    {% block content %}
-    {% endblock %}
+
 </body>
+
 </html>
