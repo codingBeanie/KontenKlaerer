@@ -3,7 +3,7 @@
     --color-primary-light: #fff8f8;
     --color-secondary: #2A5375;
     --color-font: #211c1c;
-    --color-accent: #CEC73A;
+    --color-accent: #dde02d;
 }
 body, html{
     height: 100%;
@@ -96,6 +96,8 @@ a{
 
 .content-box{
     display: flex;
+    align-items:center;
+    justify-content:space-around;
     padding: 0.5rem;
     margin: 0.4rem;
     border: 1rem solid var(--color-primary-light);
@@ -110,6 +112,7 @@ a{
     justify-content: flex-start;
     padding: 0.5rem;
     margin-bottom: 0.3rem;
+    transition: all 0.2s ease-in-out;
 }
 
 .link-box:hover{
@@ -128,6 +131,42 @@ a{
     
 }
 
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    font-size: 1rem;
+    background-color: var(--color-secondary);
+    color:var(--color-primary-light);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.custom-file-upload:hover{
+    background-color: var(--color-accent);
+    color:var(--color-secondary);
+}
+
+button{
+    font-size: 1rem;
+    background-color: var(--color-secondary);
+    color:var(--color-primary-light);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover{
+    background-color: var(--color-accent);
+    color:var(--color-secondary);
+}
+
+.info-text{
+    color:var(--color-secondary);
+}
 
 
 

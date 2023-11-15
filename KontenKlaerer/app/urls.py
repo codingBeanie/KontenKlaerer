@@ -2,5 +2,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='csv-selector'),
+    path('', views.pageData, name='pageData'),
 ]
