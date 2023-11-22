@@ -1,0 +1,64 @@
+{% extends 'base.html' %}q
+
+{% block content %}
+<!-- headline box-->
+<div class="content-box p1 m2b">
+    <h1>Kategorien verwalten</h1>
+</div>
+
+<!-- frame for income/expense boxes-->
+<div class="flex-row m2b">
+    <!-- left box income-->
+    <div class="content-box flex-grow p1 m1r">
+      <h2>Einnahmen</h2>
+    </div>
+
+    <!-- right box expense-->
+    <div class="content-box flex-grow p1 m1l">
+        <h2>2</h2>
+    </div>
+</div>
+
+
+
+
+{% comment %} <div class="main">
+        <div class="content-box content-rows">
+<h1>Kategorien verwalten</h1>
+    Hier können Sie Kategorien anlegen, bearbeiten oder löschen.
+    </div>
+    <div class="content-box content-rows">
+        <div>
+            <h2>Kategorie anlegen</h2>
+        </div>
+        <div class="forms">
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Name" required>
+                <select name="parent" required>
+                    <option value="0">Keine</option>
+                    {% for category in categories %}
+                    <option value="{{category.id}}">{{category.name}}</option>
+                    {% endfor %}
+                <input type="submit" value="Anlegen">
+            </form>
+            <div class="info-text">{{message}}</div>
+        </div>
+    </div>
+    <div class="content-box content-rows">
+        <h2>Kategorien</h2>
+        <div class="treeview">
+            {% for item in categories_html %}
+                {% if item.1 == 0 %}
+                    <div class="tree tree{{item.1}}"><a class="link_trash_treeview" href="deletecategory/{{item.0}}"><i class="fi-rr-trash"></i></a> {{item.0}}</div>
+                {% elif item.1 <= 3 %}
+                    <div class="tree tree{{item.1}}"><a class="link_trash_treeview" href="deletecategory/{{item.0}}"><i class="fi-rr-trash"></i></a> <i class=" fi-rr-arrow-alt-from-left"></i> {{item.0}}</div>
+               {%else%}
+                    <div class="tree tree3"><a class="link_trash_treeview" href="deletecategory/{{item.0}}"><i class="fi-rr-trash"></i></a> <i class=" fi-rr-arrow-alt-from-left"></i> **{{item.0}}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div> {% endcomment %}
+
+{% endblock %}

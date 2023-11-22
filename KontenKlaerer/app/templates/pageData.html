@@ -1,15 +1,75 @@
 {% extends 'base.html' %}q
 
 {% block content %}
-<div class="header">
+<!-- headline box-->
+<div class="content-box p1 m2b">
     <h1>Daten verwalten</h1>
-    Hier können Sie Ihre Daten verwalten. Laden Sie CSV-Dateien hoch oder löschen Sie bereits hochgeladenen Dateien.
-
 </div>
 
-<div class="main">
-    <div class="content-box">
-        <div class="info-text">{{message}}</div>
+<!-- file table-->
+<div class="content-box p1 m2b">
+    <div>
+        <h2>Hochgeladene Dateien</h2>
+    </div>
+    <div class="m2">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}        
+            <label for="file-upload" class="button">
+                Datei hochladen
+            </label>
+            <input class="file_input" type="file" id="file-upload" name="file_upload" accept=".csv" onchange="form.submit()">  
+         </form>
+    </div>
+    <div>
+        <table class="w100">
+            <tr>
+                <th align=left>Datei</th>
+                <th align= center>Aktion</th>
+            </tr>
+            {% for file in files %}
+            <tr>
+                <td>{{file}}</td>
+                <td align=center><a href="deletecsv/{{file}}"><i class="fi-rr-trash"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<!-- data preview-->
+<div class="content-box p1">
+    <div>
+        <h2>Daten-Vorschau</h2> ({{num_rows}} Datensätze)
+    </div>
+    <div class="table">
+        <table>
+            <tr>
+                <th class="">Datum</th>
+                <th class="">Empfänger/Sender</th>
+                <th class="">Verwendungszweck</th>
+                <th class="">Kategorie</th>
+                <th class="">Betrag</th>
+                
+            </tr>
+            {%for index, row in data_frame.iterrows%}
+                <tr>
+                    <td>{{row.date}}</td>
+                    <td>{{row.payee}}</td>
+                    <td>{{row.purpose}}</td>
+                    <td>{{row.category}}</td>
+                    <td align="right">{{row.amount_display}} €</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% comment %} <div class="content-box">
+    <div class="content-item info-text w70">{{message}}</div>
+    <div class="content-item">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="file-upload" class="custom-file-upload">
@@ -17,8 +77,50 @@
             </label>
             <input type="file" id="file-upload" name="file_upload" accept=".csv" onchange="form.submit()">
         </form>
+    </div>
+</div>
 
+<div class="content-box content-rows">
+    <div>
+        <h2>Hochgeladene Dateien</h2>
+    </div>
+    <div class="w100">
+        <table>
+            <tr>
+                <th>Datei</th>
+                <th>Aktion</th>
+            </tr>
+            {% for file in files %}
+            <tr>
+                <td>{{file}}</td>
+                <td class="center"><a class="link_trash" href="deletecsv/{{file}}"><i class="fi-rr-trash"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 
 </div>
-{% endblock %}
+<div class="content-box">
+    <div class="content-item">
+        <table>
+            <tr>
+                <th class="w15">Datum</th>
+                <th class="w20">Empfänger/Sender</th>
+                <th class="w30">Verwendungszweck</th>
+                <th class="w10">Kategorie</th>
+                <th class="right-bound w15">Betrag</th>
+                
+            </tr>
+            {%for index, row in data_frame.iterrows%}
+                <tr>
+                    <td>{{row.date}}</td>
+                    <td>{{row.payee}}</td>
+                    <td>{{row.purpose}}</td>
+                    <td>{{row.category}}</td>
+                    <td align="right">{{row.amount_display}} €</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div> {% endcomment %}

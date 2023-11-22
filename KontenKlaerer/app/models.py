@@ -1,5 +1,8 @@
 from django.db import models
 
 
-class DataFiles(models.Model):
-    filename = models.CharField(max_length=200)
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    parent = models.ForeignKey(
+        'self', on_delete=models.CASCADE, null=True, blank=True)
+    expense = models.BooleanField(default=True)

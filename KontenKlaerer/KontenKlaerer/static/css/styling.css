@@ -1,0 +1,220 @@
+/* color variables */
+:root{
+    --primary: #e4eef4;
+    --light: #fff8f8;
+    --dark: #d8cece;
+    --secondary: #1c4f62;
+    --font: #211c1c;
+    --accent: #dde02d;
+}
+
+/* basics / customised standard elements*/
+body, html{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary);
+    color: var(--font);
+    font-family: "Roboto", sans-serif;
+    font-size: 1rem;
+}
+
+h1{
+    font-size: 2.4rem;
+    font-weight: bold;
+    padding: 0rem;
+    margin-top:1.0rem;
+    margin-bottom:0.4rem;
+    padding-bottom: 1rem;
+}
+
+h2{
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+h3{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+a{
+    text-decoration: none;
+    color:inherit;
+}
+
+
+th{
+    font-weight: bold;
+    background-color: var(--dark);
+    color: var(--secondary);
+    padding: 0.5rem;
+    position: sticky;
+    top: 0;
+}
+
+td{
+    background-color: var(--light);
+    color: var(--font);
+    padding: 0.5rem;
+    border-bottom: 0.1rem solid var(--dark);
+}
+
+
+input[type="file"] {
+    display: none;
+}
+
+
+/* flexbox */
+.flex-row{
+    display: flex;
+}
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-grow{
+    flex-grow: 1;
+}
+
+/* content-boxes */
+.content-box{
+    border-radius: 1rem;
+    box-shadow: 0.2rem 0.3rem 0rem 0rem var(--dark);
+    background-color: var(--light);
+}
+.navbar{
+    background-color: var(--secondary);
+    min-width: 200px;
+    max-width: 320px;
+    justify-content: space-between;
+}
+
+/* aligning */
+.center-h{
+    align-items: center;
+}
+.center-v{
+    justify-content: center;
+}
+.align-top{
+    align-items:start;
+    justify-content: start;
+}
+.align-right{
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.stretch{
+    align-items: stretch;
+    justify-items: stretch;
+}
+
+/* padding and margins */
+.p1{
+    padding: 0.5rem;
+}
+.p2{
+    padding: 1rem;
+}
+.p1r{
+    padding-right: 0.5rem;
+}
+.m1{
+    margin: 0.5rem;
+}
+.m1r{
+    margin-right: 0.5rem;
+}
+.m1l{
+    margin-left: 0.5rem;
+}
+.m2{
+    margin: 1rem;
+}
+.m2b{
+    margin-bottom: 1rem;
+}
+.m2r{
+    margin-right: 1rem;
+}
+.m3b{
+    margin-bottom: 2rem;
+}
+
+/* width and heigt  */
+.w20{
+    width: 20%;
+}
+.w40{
+    width: 40%;
+}
+.w100{
+    width: 100%;
+}
+.vh100{
+    height: 100vh;
+}
+
+.vw100{
+    width: 100vw;
+}
+
+/* logo-styling */
+.logo{
+    color:var(--light);
+    font-family: "Futura", sans-serif;
+}
+
+.logo-k1{
+    font-weight: bold;
+    color: var(--primary);
+    font-size: 3.5rem;
+}
+
+.logo-k2{
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 3.5rem;
+}
+
+.logo-text{
+    font-size: 0.8rem;
+    color: var(--primary);
+}
+
+/* menu-link-styling */
+.link-box{
+    font-size: 1.2rem;
+    color: var(--primary);
+}
+
+.link-box:hover{
+    color: var(--secondary);
+    background-color: var(--dark);
+    
+}
+
+/* button-styling */
+.button {
+    font-size: 1rem;
+    background-color: var(--secondary);
+    color:var(--light);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.button:hover{
+    background-color: var(--accent);
+    color:var(--secondary);
+}
+
+/* table-styling */
+.table{
+    height: 50vh;
+    overflow-y: scroll;
+}
