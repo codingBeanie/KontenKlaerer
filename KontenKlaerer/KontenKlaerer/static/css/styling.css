@@ -38,6 +38,15 @@ h3{
     font-weight: bold;
 }
 
+
+h4{
+    font-size: 0.8rem;
+    font-weight: 100;
+    margin:0;
+    padding-left: 1rem;
+    padding-bottom: 0.4rem;
+}
+
 a{
     text-decoration: none;
     color:inherit;
@@ -76,7 +85,7 @@ input[type="file"] {
 }
 
 .flex-grow{
-    flex-grow: 1;
+    flex-grow: 2;
 }
 
 /* content-boxes */
@@ -106,6 +115,12 @@ input[type="file"] {
 .align-right{
     align-items: flex-end;
     justify-content: flex-end;
+    text-align: right;
+    margin-left: auto;
+}
+.align-between{
+    align-items: space-between;
+    justify-content: space-between;
 }
 .stretch{
     align-items: stretch;
@@ -157,6 +172,9 @@ input[type="file"] {
 .vh100{
     height: 100vh;
 }
+.vh20{
+    height: 20vh;
+}
 
 .vw100{
     width: 100vw;
@@ -191,10 +209,16 @@ input[type="file"] {
     color: var(--primary);
 }
 
-.link-box:hover{
+.link-box:hover {
+    font-size: 1.2rem;
     color: var(--secondary);
     background-color: var(--dark);
     
+}
+.link-box-active{
+    font-size: 1.2rem;
+    color: var(--secondary);
+    background-color: var(--dark);  
 }
 
 /* button-styling */
@@ -217,4 +241,85 @@ input[type="file"] {
 .table{
     height: 50vh;
     overflow-y: scroll;
+}
+
+.table-small{
+    height: 20vh;
+    overflow-y: scroll;
+}
+
+/* tree-view */
+.treeview{
+    background-color: var(--primary);
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    transition: all 0.2s ease-in-out;
+
+}
+
+.tree-item{
+        &:hover{
+        background-color: var(--accent);
+        color:var(--secondary);
+        cursor: pointer;
+        .link_trash_treeview{
+            visibility: visible;
+        }
+    }
+}
+
+
+.tree0{
+   font-weight: bold;
+}
+
+.tree1{
+    margin-left: 2rem;
+    border-left: 0.2rem solid var(--secondary);
+}
+
+.tree2{
+    font-size: 1.0rem;
+    margin-left: 4rem;
+    border-left: 0.2rem solid var(--secondary);
+}
+
+.tree3{
+    font-size: 1.0rem;
+    font-style: italic;
+    margin-left: 6rem;
+    border-left: 0.2rem solid var(--secondary);
+}
+.link_trash_treeview{
+    font-size: 1rem;
+    visibility: hidden;
+}
+
+/*input-styling */
+.inputform{
+    font-size: 0.8rem;
+    border: 0.2rem solid var(--dark);
+    border-radius: 0.5rem;
+}
+
+input[type="text"]{
+    width: 145px;
+    font-size: 1.0rem;
+    border-radius: 0.3rem;
+    border: 0.1rem solid var(--dark);
+}
+
+input[type="submit"]{
+    font-size: 1.0rem;
+    width: 100px;
+    border-radius: 0.5rem;
+    color: var(--light);
+    background-color:var(--secondary)
+}
+
+select{
+    width: 150px;
+    font-size: 1.0rem;
+    border-radius: 0.5rem;
+    border: 0.1rem solid var(--dark);
 }

@@ -4,8 +4,8 @@
 
 <head>
     <title>Konten-Klärer</title>
-    <link rel="stylesheet" type="text/css" href="{%static 'css/styling.css' %}?v=1035">
-    <link rel="stylesheet" href="{%static 'webfonts/uicons-regular-rounded.css' %}?v=1004">
+    <link rel="stylesheet" type="text/css" href="{%static 'css/styling.css' %}?v=2">
+    <link rel="stylesheet" href="{%static 'webfonts/uicons-regular-rounded.css' %}?v=1005">
 </head>
 
 <body>
@@ -27,7 +27,8 @@
             <!-- links -->
             <div class="link-menu">
                 <!-- Daten -->
-                <div class="link-box">
+                {% if active_page == "data" %}<div class="link-box-active">
+                {% else %}<div class="link-box">{% endif %}
                     <a href="/">
                         <div class="flex-row p2">
                             <div class="p1r"><i class="fi-rr-folder-upload"></i></div>
@@ -37,7 +38,8 @@
                 </div>
 
                 <!-- Kategorien -->
-                <div class="link-box">
+                {% if active_page == "categories" %}<div class="link-box-active">
+                {% else %}<div class="link-box">{% endif %}
                     <a href="/categories">
                         <div class="flex-row p2">
                             <div class="p1r"><i class="fi-rr-folder-tree"></i></div>
@@ -47,6 +49,15 @@
                 </div>
 
                 <!-- Zuordnungen -->
+                {% if active_page == "assign" %}<div class="link-box-active">
+                {% else %}<div class="link-box">{% endif %}
+                    <a href="/assign">
+                        <div class="flex-row p2">
+                            <div class="p1r"><i class=" fi-rr-folders"></i></div>
+                            <div>Zuordnungen</div>
+                        </div>
+                    </a>
+                </div>
 
                 <!-- Statistiken -->
             </div>

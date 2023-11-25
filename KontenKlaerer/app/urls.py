@@ -7,4 +7,6 @@ urlpatterns = [
     path('categories/', views.pageCategories, name='pageCategories'),
     path("categories/deletecategory/<str:category_name>/",
          views.delete_category, name='delete_category'),
+    path("assign", views.pageAssign, name='pageAssign'),
+    path("deleteassign/<str:keyword>/", views.delete_assign, name="delete_assign")
 ]

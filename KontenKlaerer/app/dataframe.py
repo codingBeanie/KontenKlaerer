@@ -38,5 +38,4 @@ def create_data_frame():
     data_frame["category"] = None
     data_frame = data_frame[data_frame.paytype != "Abschluss"]
 
-    print(data_frame)
     return (data_frame)

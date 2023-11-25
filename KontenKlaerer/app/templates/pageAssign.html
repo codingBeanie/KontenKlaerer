@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- headline box-->
+<div class="content-box p1 m2b">
+    <h1>Kategorien zuordnen</h1>
+</div>
+
+
+<!--box for input and display assignments-->
+<div class="m2b flex-row">
+<!--LEFT : input form-->
+    <div class="content-box p1 m1r flex-grow w20">
+       <!-- insert form-->
+        <form method="post">
+            {% csrf_token %}
+            <div><h2>Stichwort-Zuordnung anlegen</h2></div>
+            <div class="flex-column inputform m2b">
+                <div class="flex-row center-h m1r p1">                
+                   <div class="m1r"><label for="keyword">Stichwort</label></div> 
+                   <div class="align-right"> <input type="text" name="keyword" placeholder="Rewe" required></div>
+                </div>
+                <div class="flex-row center-h m1r p1">
+                   <div class="m1r"> <label for="category">Kategorien</label></div>
+                   <div class="align-right"> <select name="category" required>
+                        {% for category in categories %}
+                        <option value="{{category.id}}">{{category.name}}</option>
+                        {% endfor %}
+                        </select></div>
+                </div>
+                <div class="p1 align-right">
+                    <input type="submit" value="Anlegen">
+                </div>
+            </div>
+        </form>
+    </div>
+<!--RIGHT : table assignments-->
+    <div class="content-box p1 m1l flex-grow">
+        <h2>Stichwort-Zuordnungen</h2>
+        <div class="table-small">
+             <table>
+                <tr>
+                    <th>Stichworte</th>
+                    <th>Kategorie</th>
+                    <th>Aktion</th>
+                </tr>
+                {% for item in assignments %}
+                    <tr>
+                        <td>{{item.keyword}}</td>
+                        <td>{{item.category.name}}</td>
+                        <td><a class="" href="deleteassign/{{item.keyword}}"><i class="fi-rr-trash"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!--table unassigned date-->
+<div class="content-box p1">
+    <div>
+        <h2>Daten-Vorschau</h2> ({{num_rows}} Datensätze ohen Kategorie)
+    </div>
+    <div class="table">
+        <table>
+            <tr>
+                <th class="">Datum</th>
+                <th class="">Empfänger/Sender</th>
+                <th class="">Verwendungszweck</th>
+                <th class="">Kategorie</th>
+                <th class="">Betrag</th>
+                
+            </tr>
+            {%for index, row in data_frame.iterrows%}
+                <tr>
+                    <td>{{row.date}}</td>
+                    <td>{{row.payee}}</td>
+                    <td>{{row.purpose}}</td>
+                    <td>{{row.category}}</td>
+                    <td align="right">{{row.amount_display}} €</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}
