@@ -1,4 +1,3 @@
 /.DS_Store
 /venv
-/KontenKlaerer/files
-/KontenKlaerer/db.sqlite3
+/KontenKlaerer/data

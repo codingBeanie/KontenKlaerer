@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- headline box-->
+<div class="content-box p1 m2b">
+    <h1>Statistiken</h1>
+</div>
+<!-- table with basic statistic-->
+<div class="content-box p1 m2b">
+    <h2>Monatsauswertung</h2>
+    <div>
+        <table>
+            <tr>
+                <th>Periode</th>
+                <th>Einnahmen</th>
+                <th>Ausgaben</th>
+                <th>Bilanz</th>
+            </tr>
+            {% for item in basic_statistics%}
+            <tr>
+                <td>{{ item.year }} | {{item.month}}</td>
+                <td align="right">{{ item.income }}</td>
+                <td align="right">{{ item.expense }}</td>
+                <td align="right">{{ item.balance }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

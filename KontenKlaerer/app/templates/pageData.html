@@ -1,5 +1,4 @@
 {% extends 'base.html' %}q
-
 {% block content %}
 <!-- headline box-->
 <div class="content-box p1 m2b">
@@ -24,12 +23,14 @@
         <table class="w100">
             <tr>
                 <th align=left>Datei</th>
+                <th align=left>Upload-Datum</th>
                 <th align= center>Aktion</th>
             </tr>
             {% for file in files %}
             <tr>
-                <td>{{file}}</td>
-                <td align=center><a href="deletecsv/{{file}}"><i class="fi-rr-trash"></i></a>
+                <td>{{file.file_name}}</td>
+                <td>{{file.file_upload_time}}</td>
+                <td align=center><a href="deletecsv/{{file.file_id}}"><i class="fi-rr-trash"></i></a>
                 </td>
             </tr>
             {% endfor %}
@@ -52,13 +53,13 @@
                 <th class="">Betrag</th>
                 
             </tr>
-            {%for index, row in data_frame.iterrows%}
+            {%for item in data%}
                 <tr>
-                    <td>{{row.date}}</td>
-                    <td>{{row.payee}}</td>
-                    <td>{{row.purpose}}</td>
-                    <td>{{row.category}}</td>
-                    <td align="right">{{row.amount_display}} €</td>
+                    <td>{{item.date|date:"d.m.Y"}}</td>
+                    <td>{{item.payee}}</td>
+                    <td>{{item.purpose}}</td>
+                    <td>{{item.category.name}}</td>
+                    <td align="right">{{item.amount_display}} €</td>
                 </tr>
             {% endfor %}
         </table>

@@ -10,7 +10,7 @@
 <!--box for input and display assignments-->
 <div class="m2b flex-row">
 <!--LEFT : input form-->
-    <div class="content-box p1 m1r flex-grow w20">
+    <div class="content-box p1 m1r flex-grow">
        <!-- insert form-->
         <form method="post">
             {% csrf_token %}
@@ -24,7 +24,17 @@
                    <div class="m1r"> <label for="category">Kategorien</label></div>
                    <div class="align-right"> <select name="category" required>
                         {% for category in categories %}
-                        <option value="{{category.id}}">{{category.name}}</option>
+                        <option value="{{category.id}}">
+                            {%if category.expense%}
+                                [-] {{category.name}}
+                            {%else%}
+                                [+] {{category.name}}
+                            {% endif %}
+                            {% if category.ignore%}
+                                (ignoriert)
+                            {% endif %}
+                        </option>
+                            
                         {% endfor %}
                         </select></div>
                 </div>
@@ -40,15 +50,15 @@
         <div class="table-small">
              <table>
                 <tr>
-                    <th>Stichworte</th>
+                    <th>Stichwort</th>
                     <th>Kategorie</th>
                     <th>Aktion</th>
                 </tr>
                 {% for item in assignments %}
                     <tr>
-                        <td>{{item.keyword}}</td>
-                        <td>{{item.category.name}}</td>
-                        <td><a class="" href="deleteassign/{{item.keyword}}"><i class="fi-rr-trash"></i></a></td>
+                        <td class="">{{item.keyword}}</td>
+                        <td class="">{{item.category.name}}</td>
+                        <td align="center"><a class="" href="deleteassign/{{item.keyword}}"><i class="fi-rr-trash"></i></a></td>
                     </tr>
                 {% endfor %}
             </table>
@@ -72,9 +82,9 @@
                 <th class="">Betrag</th>
                 
             </tr>
-            {%for index, row in data_frame.iterrows%}
+            {%for row in data%}
                 <tr>
-                    <td>{{row.date}}</td>
+                    <td>{{row.date|date:"d.m.Y"}}</td>
                     <td>{{row.payee}}</td>
                     <td>{{row.purpose}}</td>
                     <td>{{row.category}}</td>

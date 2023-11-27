@@ -166,6 +166,12 @@ input[type="file"] {
 .w40{
     width: 40%;
 }
+.w60{
+    width: 60%;
+}
+.w80{
+    width: 80%;
+}
 .w100{
     width: 100%;
 }
@@ -252,8 +258,11 @@ input[type="file"] {
 .treeview{
     background-color: var(--primary);
     border-radius: 0.5rem;
-    font-size: 1.2rem;
+    font-size: 1.0rem;
     transition: all 0.2s ease-in-out;
+    padding:0;
+    margin:0;
+    line-height: 0.0rem;
 
 }
 
@@ -290,6 +299,12 @@ input[type="file"] {
     margin-left: 6rem;
     border-left: 0.2rem solid var(--secondary);
 }
+
+.tree-ignore{
+    color: var(--dark);
+    font-style: italic;
+}
+
 .link_trash_treeview{
     font-size: 1rem;
     visibility: hidden;

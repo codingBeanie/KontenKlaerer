@@ -1,11 +1,15 @@
 from django.db import models
+from datetime import datetime
+from django.shortcuts import render, redirect
 import csv
 import os
+import uuid
 
 
 class Data(models.Model):
     file_name = models.CharField(max_length=200)
-    file_timestamp = models.DateTimeField(auto_now_add=True)
+    file_id = models.CharField(max_length=200)
+    file_upload_time = models.CharField(max_length=200)
     date = models.DateField()
     month = models.IntegerField()
     year = models.IntegerField()
@@ -13,8 +17,9 @@ class Data(models.Model):
     payee = models.CharField(max_length=200)
     purpose = models.CharField(max_length=200)
     amount = models.FloatField()
+    amount_display = models.CharField(max_length=200, null=True, blank=True)
     category = models.ForeignKey(
-        'Category', on_delete=models.CASCADE, null=True, blank=True)
+        'Category', on_delete=models.SET_NULL, null=True, blank=True)
 
 
 class Category(models.Model):
@@ -22,6 +27,7 @@ class Category(models.Model):
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True)
     expense = models.BooleanField(default=True)
+    ignore = models.BooleanField(default=False)
 
 
 class Assignment(models.Model):
@@ -35,22 +41,37 @@ class Assignment(models.Model):
 def insert_data(csv_name):
     # meta variables
     row_start = 7
-    csv_file = "./files/" + csv_name
+    csv_file = "./data/" + csv_name
+    unique_id = str(uuid.uuid4())
+    time = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
     with open(csv_file, encoding="UTF-8") as csv_file:
         reader = csv.reader(csv_file, delimiter=';')
         for row in reader:
             if reader.line_num > row_start:
-                # create data object
-                data = Data(file_name=csv_name,
-                            date=row[0][6:10] + "-" +
-                            row[0][3:5] + "-" + row[0][0:2],
-                            month=row[0][3:5],
-                            year=row[0][6:10],
-                            paytype=row[2],
-                            payee=row[3],
-                            purpose=row[4],
-                            amount=row[7].replace(".", "").replace(",", "."))
+                if row[3] != "":
+                    # create data object
+                    data = Data(file_name=csv_name,
+                                file_id=unique_id,
+                                file_upload_time=time,
+                                date=row[0][6:10] + "-" +
+                                row[0][3:5] + "-" + row[0][0:2],
+                                month=row[0][3:5],
+                                year=row[0][6:10],
+                                paytype=row[2],
+                                payee=row[3],
+                                purpose=row[4],
+                                amount=row[7].replace(
+                                    ".", "").replace(",", "."),
+                                amount_display=row[7])
                 data.save()
+        apply_assignments()
+
+
+def delete_data(request, file_id):
+    data = Data.objects.filter(file_id=file_id)
+    data.delete()
+    return redirect("pageData")
+
 
 
 ######################################################
@@ -84,7 +105,7 @@ def get_categories(expense=True):
     categories = []
     for result in query:
         identations = get_indentations(result)
-        categories.append((result.name, identations))
+        categories.append((result.name, identations, result.ignore))
         get_children(result, categories)
     return (categories)
 
@@ -98,24 +119,101 @@ def get_children(parent, categories):
     return (categories)
 
 
-def create_category(name, parent_id, expense):
-    # case ategory already exists
-    if Category.objects.filter(name=name).exists():
-        return ("Kategorie existiert bereits")
-
-    # case has valid parent
-    if parent_id != "0":
-        parent = Category.objects.get(id=parent_id)
-        category = Category(name=name, parent=parent, expense=expense)
+def create_category(request):
+    # check if post in request has key "income" or "expense"
+    print("POST-REQUEST", request.POST)
+    if "name_expense" in request.POST:
+        expense = True
+        name = request.POST["name_expense"]
+    else:
+        expense = False
+        name = request.POST["name_income"]
+    parent = request.POST["parent"]
+    if request.POST.get("ignore", False):
+        ignore = True
+    else:
+        ignore = False
+    # check if category already exists
+    if not Category.objects.filter(name=name).exists():
+        if parent == "0":
+            parent = None
+        else:
+            parent = Category.objects.get(id=parent)
+        category = Category(name=name, parent=parent,
+                            expense=expense, ignore=ignore)
         category.save()
-        return ("Erfolgreich gespeichert")
+    apply_assignments()
+    return redirect("pageCategories")
 
-    # case has no parent
-    if parent_id == "0":
-        category = Category(name=name, expense=expense)
-        category.save()
-        return ("Erfolgreich gespeichert")
+
+def delete_category(request, category_name):
+    category = Category.objects.get(name=category_name)
+    category.delete()
+    apply_assignments()
+    return redirect("pageCategories")
+
+
+def get_categories_selection():
+    result = []
+    categories = Category.objects.all()
+    for category in categories:
+        # check if category has no further children
+        if not Category.objects.filter(parent=category).exists():
+            result.append(category)
+    return result
 
 ######################################################
 #### Functions Assignments ###########################
 ######################################################
+
+
+def create_assignment(request):
+    # get data from form
+    keyword = request.POST["keyword"]
+    category = request.POST["category"]
+    # check if keyword already exists
+    if not Assignment.objects.filter(keyword=keyword).exists():
+        category = Category.objects.get(id=category)
+        assignment = Assignment(keyword=keyword, category=category)
+        assignment.save()
+    apply_assignments()
+
+
+def delete_assign(request, keyword):
+    assignment = Assignment.objects.get(keyword=keyword)
+    assignment.delete()
+    apply_assignments()
+    return redirect("pageAssign")
+
+
+def apply_assignments():
+    # set all categories to None
+    data = Data.objects.all()
+    for row in data:
+        row.category = None
+        row.save()
+
+    # apply all assignments
+    assignments = Assignment.objects.all()
+    for assignment in assignments:
+        type = assignment.category.expense
+        # for purpose
+        data = Data.objects.filter(purpose__icontains=assignment.keyword)
+        for row in data:
+            if type == True and row.amount < 0:
+                row.category = assignment.category
+                row.save()
+            if type == False and row.amount > 0:
+                row.category = assignment.category
+                row.save()
+
+        # for payee
+        data = Data.objects.filter(payee__icontains=assignment.keyword)
+        for row in data:
+            if type == True and row.amount < 0:
+                row.category = assignment.category
+                row.save()
+            if type == False and row.amount > 0:
+                row.category = assignment.category
+                row.save()
+    return redirect("pageAssign")
