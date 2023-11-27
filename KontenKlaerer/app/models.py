@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.shortcuts import render, redirect
+from django.core.files.storage import default_storage
 import csv
 import os
 import uuid
@@ -24,8 +25,6 @@ class Data(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
-    parent = models.ForeignKey(
-        'self', on_delete=models.CASCADE, null=True, blank=True)
     expense = models.BooleanField(default=True)
     ignore = models.BooleanField(default=False)
 
@@ -34,10 +33,24 @@ class Assignment(models.Model):
     keyword = models.CharField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
+######################################################
+#### File Management  ‚    ############################
+######################################################
+
+
+def post_file_upload(request):
+    print("FILES", request.FILES)
+    file = request.FILES["file_upload"]
+    file_name = default_storage.save(file.name, file)
+    insert_data(file.name)
+    os.remove("./data/" + file_name)
+    return redirect("pageData")
 
 ######################################################
 #### Functions Data       ############################
 ######################################################
+
+
 def insert_data(csv_name):
     # meta variables
     row_start = 7
@@ -73,7 +86,6 @@ def delete_data(request, file_id):
     return redirect("pageData")
 
 
-
 ######################################################
 #### Functions Categories ############################
 ######################################################
@@ -87,12 +99,12 @@ def get_all_categories():
     return categories
 
 
-def get_indentations(category):
+""" def get_indentations(category):
     indentation = 0
     while category.parent != None:
         category = category.parent
         indentation += 1
-    return indentation
+    return indentation """
 
 
 def get_categories_select(expense=True):
@@ -100,46 +112,50 @@ def get_categories_select(expense=True):
     return query
 
 
-def get_categories(expense=True):
+""" def get_categories(expense=True):
     query = Category.objects.filter(parent=None, expense=expense)
     categories = []
     for result in query:
         identations = get_indentations(result)
         categories.append((result.name, identations, result.ignore))
         get_children(result, categories)
+    return (categories) """
+
+
+def get_categories(expense=True):
+    query = Category.objects.filter(expense=expense)
+    categories = []
+    for result in query:
+        categories.append(result)
     return (categories)
 
 
-def get_children(parent, categories):
+""" def get_children(parent, categories):
     query = Category.objects.filter(parent=parent)
     for result in query:
         identations = get_indentations(result)
         categories.append((result.name, identations))
         get_children(result, categories)
-    return (categories)
+    return (categories) """
 
 
 def create_category(request):
     # check if post in request has key "income" or "expense"
-    print("POST-REQUEST", request.POST)
     if "name_expense" in request.POST:
         expense = True
         name = request.POST["name_expense"]
     else:
         expense = False
         name = request.POST["name_income"]
-    parent = request.POST["parent"]
+
     if request.POST.get("ignore", False):
         ignore = True
     else:
         ignore = False
+
     # check if category already exists
     if not Category.objects.filter(name=name).exists():
-        if parent == "0":
-            parent = None
-        else:
-            parent = Category.objects.get(id=parent)
-        category = Category(name=name, parent=parent,
+        category = Category(name=name,
                             expense=expense, ignore=ignore)
         category.save()
     apply_assignments()
@@ -152,15 +168,6 @@ def delete_category(request, category_name):
     apply_assignments()
     return redirect("pageCategories")
 
-
-def get_categories_selection():
-    result = []
-    categories = Category.objects.all()
-    for category in categories:
-        # check if category has no further children
-        if not Category.objects.filter(parent=category).exists():
-            result.append(category)
-    return result
 
 ######################################################
 #### Functions Assignments ###########################
