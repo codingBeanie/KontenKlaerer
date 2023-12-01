@@ -6,22 +6,151 @@
     <h1>Statistiken</h1>
 </div>
 <!-- table with basic statistic-->
-<div class="content-box p1 m2b">
-    <h2>Monatsauswertung</h2>
-    <div>
+<div class="content-box flex-row center-h p1 m2b">
+    <div class="m3r">
+        <h2>Tabellarische Übersicht</h2>
+    </div>
+    <form>
+        <div class="flex-row">
+            <div class="flex-column m2r">
+                <div class="flex-row">
+                    <div class="flex-grow m1r">von.Jahr</div>
+                    <div class="flex-grow">von.Monat</div>
+                </div>
+                <div class="flex-row">
+                    <div class="m1r">
+                        <input type="text" name="from_year" placeholder="{{period_range.from_year}}" required>
+                    </div>
+                    <div class="">
+                        <input type="text" name="from_month" placeholder="{{period_range.from_month}}" required>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="flex-row">
+                BIS
+                <input type="text" name="to_year" placeholder="{{period_range.to_year}}" required>
+                <input type="text" name="to_month" placeholder="{{period_range.to_month}}" required>
+            </div>
+
+        </div>
+    </form>
+
+
+</div>
+<div class="content-box p1 m2b table">
+    <table>
+        <!-- header -->
+        <tr>
+            <th>Kategorie</th>
+            {% for period in periods%}
+            <th>{{ period.year }} / {{period.month}}</th>
+            {% endfor %}
+            <th class="table-stat-title">Summe</th>
+            <th class="table-stat-title">Durchschnitt</th>
+            <th class="table-stat-title">Median</th>
+        </tr>
+
+        <!-- income rows -->
+        {% for item in income%}
+        <tr>
+            {% for i in item%}
+            {% if forloop.counter > row_start_stats%}
+            <!-- stat column -->
+            <td align="right" class="table-stat-item">{{i}}</td>
+            {% elif forloop.counter > 1%}
+            <!-- data column -->
+            {%if forloop.counter == selection.period and item.0 == selection.category%}
+            <!-- selection -->
+            <td align="right" class="table-select"><a href="/statistics/{{item.0}}-{{forloop.counter}}">{{i}}</a>
+            </td>
+            {% else %}
+            <!-- not selected -->
+            <td align="right" class="table-hover"><a href="/statistics/{{item.0}}-{{forloop.counter}}">{{i}}</a>
+            </td>
+            {% endif %}
+            {% else %}
+            <!-- first column -->
+            <td>{{i}}</td>
+            {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+        <!-- income subtotal -->
+        <tr>
+            <td class="table-subtotal">Summe Einnahmen</td>
+            {% for i in income_subtotal%}
+            <td class="table-subtotal" align="right">{{i}}</td>
+            {% endfor %}
+        </tr>
+
+        <!-- expense rows -->
+        {% for item in expense%}
+        <tr>
+            {% for i in item%}
+            {% if forloop.counter > row_start_stats%}
+            <!-- stat column -->
+            <td align="right" class="table-stat-item">{{i}}</td>
+            {% elif forloop.counter > 1%}
+            <!-- data column -->
+            {%if forloop.counter == selection.period and item.0 == selection.category%}
+            <!-- selection -->
+            <td align="right" class="table-select"><a href="/statistics/{{item.0}}-{{forloop.counter}}">{{i}}</a>
+            </td>
+            {% else %}
+            <!-- not selected -->
+            <td align="right" class="table-hover"><a href="/statistics/{{item.0}}-{{forloop.counter}}">{{i}}</a>
+            </td>
+            {% endif %}
+            {% else %}
+            <!-- first column -->
+            <td>{{i}}</td>
+            {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+        <!-- expense subtotal -->
+        <tr>
+            <td class="table-subtotal">Summe Ausgaben</td>
+            {% for i in expense_subtotal%}
+            <td class="table-subtotal" align="right">{{i}}</td>
+            {% endfor %}
+        </tr>
+
+        <!-- total row -->
+        <tr>
+            <td class="table-total">Summe</td>
+            {% for i in total%}
+            <td class="table-total" align="right">{{i}}</td>
+            {% endfor %}
+        </tr>
+
+    </table>
+</div>
+
+<!-- Detail Statistics -->
+<div class="content-box p1">
+    <h2>Details für {{select_category}} ({{select_period.month}} / {{select_period.year}})</h2>
+    <div class="table">
         <table>
             <tr>
-                <th>Periode</th>
-                <th>Einnahmen</th>
-                <th>Ausgaben</th>
-                <th>Bilanz</th>
+                <th class="">Datum</th>
+                <th class="">Empfänger/Sender</th>
+                <th class="">Verwendungszweck</th>
+                <th class="">Kategorie</th>
+                <th class="">Betrag</th>
+
             </tr>
-            {% for item in basic_statistics%}
+            {%for item in detail_statistics%}
             <tr>
-                <td>{{ item.year }} | {{item.month}}</td>
-                <td align="right">{{ item.income }}</td>
-                <td align="right">{{ item.expense }}</td>
-                <td align="right">{{ item.balance }}</td>
+                <td>{{item.date|date:"d.m.Y"}}</td>
+                <td>{{item.payee}}</td>
+                <td>{{item.purpose}}</td>
+                <td>{{item.category.name}}</td>
+                <td align="right">{{item.amount_display}} €</td>
             </tr>
             {% endfor %}
         </table>

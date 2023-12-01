@@ -6,6 +6,7 @@
     --secondary: #1c4f62;
     --font: #211c1c;
     --accent: #dde02d;
+    --accent-light:#e3e496;
 }
 
 /* basics / customised standard elements*/
@@ -55,8 +56,8 @@ a{
 
 th{
     font-weight: bold;
-    background-color: var(--dark);
-    color: var(--secondary);
+    background-color: var(--secondary);
+    color: var(--light);
     padding: 0.5rem;
     position: sticky;
     top: 0;
@@ -155,6 +156,9 @@ input[type="file"] {
 .m2r{
     margin-right: 1rem;
 }
+.m3r{
+    margin-right: 2rem;
+}
 .m3b{
     margin-bottom: 2rem;
 }
@@ -230,8 +234,8 @@ input[type="file"] {
 /* button-styling */
 .button {
     font-size: 1rem;
-    background-color: var(--secondary);
-    color:var(--light);
+    background-color: var(--accent);
+    color:var(--secondary);
     padding: 0.5rem;
     border-radius: 0.5rem;
     transition: all 0.2s ease-in-out;
@@ -241,17 +245,49 @@ input[type="file"] {
 .button:hover{
     background-color: var(--accent);
     color:var(--secondary);
+    border-radius: 1rem;
 }
 
 /* table-styling */
 .table{
-    height: 50vh;
+    height: 100vh;
+    width: 80vw;
     overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .table-small{
     height: 20vh;
     overflow-y: scroll;
+}
+
+.table-subtotal{
+    font-weight: bold;
+    background-color: var(--dark);
+}
+
+.table-total{
+    font-weight: bold;
+    background-color: var(--secondary);
+    color: var(--light);
+}
+
+.table-stat-title{
+    background-color: var(--accent);
+    color: var(--secondary);
+}
+
+.table-stat-item{
+    background-color: var(--accent-light);
+    color: var(--secondary);
+}
+
+.table-select{
+    background-color: var(--accent-light);
+}
+
+.table-hover:hover{
+    background-color: var(--accent-light);
 }
 
 /* tree-view */
@@ -332,6 +368,11 @@ input[type="submit"]{
     border-radius: 0.5rem;
     color: var(--light);
     background-color:var(--secondary)
+}
+
+input[type=date]{
+    font-size: 1.0rem;
+    background-color: var(--accent-light);
 }
 
 select{

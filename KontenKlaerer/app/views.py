@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import *
 from .statistics import *
 import os
+from datetime import date
 
 
 def pageData(request):
@@ -58,11 +59,28 @@ def pageAssign(request):
     return render(request, "pageAssign.html", context)
 
 
-def pageStatistics(request):
+def pageStatistics(request, select_category=None, select_period=2):
+
     # get data
-    basic_statistics = get_basic_statistics()
+    income = get_statistics(expense=False)
+    income_subtotal = get_total(expense=False)
+    expense = get_statistics(expense=True)
+    expense_subtotal = get_total(expense=True)
+    total = get_total(expense=None)
+    periods = get_periods()
+    period_range = {"from_month": periods[0]["month"], "from_year": periods[0]
+                    ["year"], "to_month": periods[1]["month"], "to_year": periods[1]["year"]}
+    row_start_stats = len(periods) + 1
+
+    selection = {"category": select_category, "period": select_period}
+    select_category = select_category
+    select_period = periods[select_period - 2]
+    detail_statistics = get_details(select_category, select_period)
 
     # prepare context
-    context = {"active_page": "statistics",
-               "basic_statistics": basic_statistics}
+    context = {"active_page": "statistics", "row_start_stats": row_start_stats,
+               "income": income, "expense": expense, "income_subtotal": income_subtotal,
+               "expense_subtotal": expense_subtotal, "total": total, "periods": periods,
+               "select_category": select_category, "select_period": select_period,
+               "detail_statistics": detail_statistics, "selection": selection, "period_range": period_range}
     return render(request, "pageStatistics.html", context)

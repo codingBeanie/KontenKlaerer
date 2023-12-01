@@ -11,5 +11,7 @@ urlpatterns = [
     path("assign", views.pageAssign, name='pageAssign'),
     path("deleteassign/<str:keyword>/",
          views.delete_assign, name="delete_assign"),
-    path("statistics", views.pageStatistics, name="pageStatistics")
+    path("statistics", views.pageStatistics, name="pageStatistics"),
+    path("statistics/<str:select_category>-<int:select_period>/",
+         views.pageStatistics, name="pageStatistics"),
 ]

@@ -34,7 +34,7 @@ class Assignment(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 ######################################################
-#### File Management  ‚    ############################
+#### File Management      ############################
 ######################################################
 
 
@@ -45,6 +45,7 @@ def post_file_upload(request):
     insert_data(file.name)
     os.remove("./data/" + file_name)
     return redirect("pageData")
+
 
 ######################################################
 #### Functions Data       ############################
@@ -57,7 +58,7 @@ def insert_data(csv_name):
     csv_file = "./data/" + csv_name
     unique_id = str(uuid.uuid4())
     time = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
-    with open(csv_file, encoding="UTF-8") as csv_file:
+    with open(csv_file, encoding="ISO-8859-1") as csv_file:
         reader = csv.reader(csv_file, delimiter=';')
         for row in reader:
             if reader.line_num > row_start:
