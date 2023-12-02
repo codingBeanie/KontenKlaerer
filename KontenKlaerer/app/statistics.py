@@ -3,7 +3,7 @@ from django.db.models import Sum
 import statistics
 
 
-def get_statistics(expense=True):
+def get_statistics(expense=True, from_date=None, to_date=None):
     # get data
     data = Data.objects.all()
     result = []
@@ -14,7 +14,7 @@ def get_statistics(expense=True):
     data = data.filter(category__ignore=False)
 
     # get periods
-    periods = get_periods()
+    periods = get_periods(from_date, to_date)
 
     # get unique categories
     categories = data.values("category").distinct()
@@ -55,13 +55,13 @@ def get_statistics(expense=True):
 
         result.append(subresult)
 
-        # sort result by the last value (median)
+        # sort result by average
         if expense:
             result = sorted(
-                result, key=lambda category: category[-1], reverse=False)
+                result, key=lambda category: category[-2], reverse=False)
         else:
             result = sorted(
-                result, key=lambda category: category[-1], reverse=True)
+                result, key=lambda category: category[-2], reverse=True)
 
     # format all integers
     for subresult in result:
@@ -71,7 +71,7 @@ def get_statistics(expense=True):
     return result
 
 
-def get_total(expense=True):
+def get_total(expense=True, from_date=None, to_date=None):
     # get data
     data = Data.objects.all()
     result = []
@@ -83,7 +83,7 @@ def get_total(expense=True):
     data = data.filter(category__ignore=False)
 
     # get periods
-    periods = get_periods()
+    periods = get_periods(from_date, to_date)
 
     # starting/default values
     total = 0
@@ -118,9 +118,13 @@ def get_total(expense=True):
     return result
 
 
-def get_periods():
+def get_periods(from_date=None, to_date=None):
     data = Data.objects.all()
-    periods = data.values("month", "year").distinct()
+    if from_date == None or to_date == None:
+        periods = data.values("month", "year").distinct()
+    else:
+        periods = data.filter(date__gte=from_date, date__lte=to_date).values(
+            "month", "year").distinct()
     # sort by year and month
     periods = sorted(periods, key=lambda month: month["year"])
     periods = sorted(periods, key=lambda month: month["month"])

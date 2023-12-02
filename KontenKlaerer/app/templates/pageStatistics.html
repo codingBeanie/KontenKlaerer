@@ -10,31 +10,48 @@
     <div class="m3r">
         <h2>Tabellarische Übersicht</h2>
     </div>
-    <form>
-        <div class="flex-row">
-            <div class="flex-column m2r">
-                <div class="flex-row">
-                    <div class="flex-grow m1r">von.Jahr</div>
-                    <div class="flex-grow">von.Monat</div>
+    <form method="post">
+        {% csrf_token %}
+        <div class="flex-row center-h">
+            <!-- date from-->
+            <div class="m3r p1">
+                <div class="p1l">
+                    Periode - von
                 </div>
-                <div class="flex-row">
-                    <div class="m1r">
-                        <input type="text" name="from_year" placeholder="{{period_range.from_year}}" required>
-                    </div>
-                    <div class="">
-                        <input type="text" name="from_month" placeholder="{{period_range.from_month}}" required>
-                    </div>
+                <div class="p1">
+                    <input class="p1l" type="text" name="period_from" value="{{select_period_from}}"
+                        pattern="\d{1,2}\-\d{4}">
                 </div>
-
-
-            </div>
-            <div class="flex-row">
-                BIS
-                <input type="text" name="to_year" placeholder="{{period_range.to_year}}" required>
-                <input type="text" name="to_month" placeholder="{{period_range.to_month}}" required>
+                <div class="p1l">
+                    <h5>Format (MM-JJJJ)</h5>
+                </div>
             </div>
 
+            <!-- date to-->
+            <div class="m3r p1">
+                <div class="p1l">
+                    Periode - bis
+                </div>
+                <div class="p1">
+                    <input class="p1l" type="text" name="period_to" value="{{select_period_to}}"
+                        pattern="\d{1,2}\-\d{4}">
+                </div>
+                <div class="p1l">
+                    <h5>Format (MM-JJJJ)</h5>
+                </div>
+            </div>
+
+            <!-- button-->
+            <div class="p1">
+                <div class="">
+                    <input type="submit" value="Aktualisieren">
+                </div>
+                <div class="message">
+                    {{message}}
+                </div>
+            </div>
         </div>
+
     </form>
 
 
@@ -45,7 +62,12 @@
         <tr>
             <th>Kategorie</th>
             {% for period in periods%}
-            <th>{{ period.year }} / {{period.month}}</th>
+            <th>
+                <div class="">
+                    <div class="">{{ period.year}}</div>
+                    <div class="">{{period.month}}</div>
+                </div>
+            </th>
             {% endfor %}
             <th class="table-stat-title">Summe</th>
             <th class="table-stat-title">Durchschnitt</th>
