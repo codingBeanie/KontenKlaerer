@@ -23,9 +23,11 @@ Grunsätzlich handelt es sich bei dem KontenKläerer in der aktuellen Version um
 Der KontenKlärer erlaubt das Hochladen von CSV-Dateien aus dem Internet-Banking. Aktuell wird nur das Dateiformat der DKB-Bank unterstützt. 
 
 ## Kategorisierung
+![screenshot](screenshots/screenshot2.png)
 Es lassen sich beliebig viele Kategorien für Ausgaben und Einnahmen einrichten. Eine Verschachtelung von Kategorien mit einer Hierachie war ursprünglich vorgesehen, wurde aber schlussendlich nicht viel genutzt, sodass ein simples Kategorisierungs-System verwendet wurde. Das Attribut "in Statistik ignorieren" markiert eine Kategorie als nicht relevant für die spätere Gesamtstatistik. 
 
 ## Zuordnungen
+![screenshot](screenshots/screenshot3.png)
 Stichwörter lassen sich zuvor erstellen Kategorien zuordnen. Dabei werden die Daten in den Feldern für den Sender, als auch für den Verwendungszweck auf ein Stichwort geprüft. Ist ein Stichwort Teil des Senders/Empfängers oder des Verwendungszweckes wird die entsprechende Buchung dem Stichwort entsprechend kategorisiert.
 
 ## Statisiken
