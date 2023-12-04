@@ -1,5 +1,3 @@
-![logo](screenshots/logo.png)
-
 # KontenKlärer
 Der KontenKlärer ist ein Hobby-Projekt zur Analyse von Bank-Transaktionsdaten mit einem Kategorisierungssystem. Es handelt sich hierbei um eine Webseite, auf Basis von Django. Es ist derzeit nicht geplant diese Webseite öffentlich zu hosten. 
 
@@ -8,7 +6,8 @@ Der KontenKlärer ist ein Hobby-Projekt zur Analyse von Bank-Transaktionsdaten m
 ## Installation
 Um den KontenKlärer lokal zu hosten, wird grundsätzlich `Python` und `Django` benötigt. `Django` kann dabei auch in einer virtuellen Umgebung betrieben werden. Zur Minimierung des Speicherplatzes wurde die für dieses Projekt verwendete virtuelle Umgebung nicht auf Github mit veröffentlicht. Über die Liste der Dependencies kann eine virtuelle Umgebung passend aufgebaut werden.
 Im Unterverzeichnis `/KontenKlaerer/KontenKlaerer` befindet sich die `manage.py` Datei, welche zum Starten des Servers benötigt wird:
-´´´python
+
+´´´
 python manage.py runserver
 ´´´
 Danach sollte die Webseite unter http://127.0.0.1:8000/ erreichbar sein.
