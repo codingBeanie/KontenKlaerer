@@ -6,6 +6,7 @@
     --secondary: #1c4f62;
     --font: #211c1c;
     --accent: #dde02d;
+    --accent-light:#e3e496;
 }
 
 /* basics / customised standard elements*/
@@ -36,6 +37,7 @@ h2{
 h3{
     font-size: 1.2rem;
     font-weight: bold;
+    margin: 0;
 }
 
 
@@ -47,6 +49,11 @@ h4{
     padding-bottom: 0.4rem;
 }
 
+h5{
+    font-size: 0.8rem;
+    font-weight: 100;
+    margin:0;
+}
 a{
     text-decoration: none;
     color:inherit;
@@ -55,8 +62,8 @@ a{
 
 th{
     font-weight: bold;
-    background-color: var(--dark);
-    color: var(--secondary);
+    background-color: var(--secondary);
+    color: var(--light);
     padding: 0.5rem;
     position: sticky;
     top: 0;
@@ -118,6 +125,14 @@ input[type="file"] {
     text-align: right;
     margin-left: auto;
 }
+.align-bottom{
+    align-items: end;
+    justify-content: end;
+    align-content: baseline;
+}
+.center-content{
+    align-content: center;
+}
 .align-between{
     align-items: space-between;
     justify-content: space-between;
@@ -137,6 +152,9 @@ input[type="file"] {
 .p1r{
     padding-right: 0.5rem;
 }
+.p1l{
+    padding-left: 0.5rem;
+}
 .m1{
     margin: 0.5rem;
 }
@@ -155,6 +173,9 @@ input[type="file"] {
 .m2r{
     margin-right: 1rem;
 }
+.m3r{
+    margin-right: 2rem;
+}
 .m3b{
     margin-bottom: 2rem;
 }
@@ -162,6 +183,9 @@ input[type="file"] {
 /* width and heigt  */
 .w20{
     width: 20%;
+}
+.w100px{
+    width: 100px;
 }
 .w40{
     width: 40%;
@@ -188,20 +212,8 @@ input[type="file"] {
 
 /* logo-styling */
 .logo{
-    color:var(--light);
-    font-family: "Futura", sans-serif;
-}
-
-.logo-k1{
-    font-weight: bold;
-    color: var(--primary);
-    font-size: 3.5rem;
-}
-
-.logo-k2{
-    color: var(--accent);
-    font-weight: bold;
-    font-size: 3.5rem;
+    width: 100px;
+    height: 100px;
 }
 
 .logo-text{
@@ -230,8 +242,8 @@ input[type="file"] {
 /* button-styling */
 .button {
     font-size: 1rem;
-    background-color: var(--secondary);
-    color:var(--light);
+    background-color: var(--accent);
+    color:var(--secondary);
     padding: 0.5rem;
     border-radius: 0.5rem;
     transition: all 0.2s ease-in-out;
@@ -241,17 +253,49 @@ input[type="file"] {
 .button:hover{
     background-color: var(--accent);
     color:var(--secondary);
+    border-radius: 1rem;
 }
 
 /* table-styling */
 .table{
-    height: 50vh;
+    height: 70vh;
+    width: 95vw;
     overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .table-small{
     height: 20vh;
     overflow-y: scroll;
+}
+
+.table-subtotal{
+    font-weight: bold;
+    background-color: var(--dark);
+}
+
+.table-total{
+    font-weight: bold;
+    background-color: var(--secondary);
+    color: var(--light);
+}
+
+.table-stat-title{
+    background-color: var(--accent);
+    color: var(--secondary);
+}
+
+.table-stat-item{
+    background-color: var(--accent-light);
+    color: var(--secondary);
+}
+
+.table-select{
+    background-color: var(--accent-light);
+}
+
+.table-hover:hover{
+    background-color: var(--accent-light);
 }
 
 /* tree-view */
@@ -280,6 +324,8 @@ input[type="file"] {
 
 .tree0{
    font-weight: bold;
+   font-size: 1.4rem;
+   padding: 1rem;
 }
 
 .tree1{
@@ -326,10 +372,20 @@ input[type="text"]{
 
 input[type="submit"]{
     font-size: 1.0rem;
-    width: 100px;
+    width: 110px;
     border-radius: 0.5rem;
     color: var(--light);
-    background-color:var(--secondary)
+    background-color:var(--secondary);
+    transition: all 0.2s ease-in-out;
+}
+input[type="submit"]:hover{
+    background-color: var(--accent);
+    color:var(--secondary);
+}
+
+input[type=date]{
+    font-size: 1.0rem;
+    background-color: var(--accent-light);
 }
 
 select{
@@ -337,4 +393,9 @@ select{
     font-size: 1.0rem;
     border-radius: 0.5rem;
     border: 0.1rem solid var(--dark);
+}
+
+.message{
+    font-size: 0.6rem;
+    color: var(--secondary);
 }

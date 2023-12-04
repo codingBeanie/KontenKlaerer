@@ -22,15 +22,6 @@
                    <div class="align-right"> <input type="text" name="name_income" placeholder="Name" required></div>
                 </div>
                 <div class="flex-row center-h m1r p1">
-                   <div class="m1r"> <label for="parent">Überkategorie</label></div>
-                   <div class="align-right"> <select name="parent" required>
-                        <option value="0">Keine</option>
-                        {% for category in categories_income_select %}
-                        <option value="{{category.id}}">{{category.name}}</option>
-                        {% endfor %}
-                        </select></div>
-                </div>
-                <div class="flex-row center-h m1r p1">
                    <div class="m1r"> <label for="ignore">In Statistik ignorieren</label></div>
                    <div class="align-right"> 
                         <input type="checkbox" name="ignore">
@@ -45,18 +36,10 @@
        <!-- treeview-->
        <div class="treeview p1">
             {% for item in categories_income_tree %}
-                {% if item.1 <= 3 %}
-                    {% if item.2 %}
-                    <div class="p1 tree-item tree{{item.1}} tree-ignore"><a class="link_trash_treeview" href="deletecategory/{{item.0}}"><i class="fi-rr-trash"></i></a>{{item.0}}</div>
-                    {% else %}
-                    <div class="p1 tree-item tree{{item.1}}"><a class="link_trash_treeview" href="deletecategory/{{item.0}}"><i class="fi-rr-trash"></i></a> {{item.0}}</div>
-                    {% endif %}
-                {%else%}
-                    {% if item.2 %}
-                    <div class="p1 tree-item tree3 tree-ignore"><a class="link_trash_treeview" href="deletecategory/{{item.0}}"><i class="fi-rr-trash"></i></a>**{{item.0}}</div>
-                    {% else %}
-                     <div class="p1 tree-item tree3"><a class="link_trash_treeview" href="deletecategory/{{item.0}}"><i class="fi-rr-trash"></i></a> **{{item.0}}</div>
-                    {% endif %}
+                {% if item.ignore %}
+                    <div class="p1 tree-item tree0 tree-ignore"><a class="link_trash_treeview" href="deletecategory/{{item.name}}"><i class="fi-rr-trash"></i></a>{{item.name}}</div>
+                {% else %}
+                    <div class="p1 tree0 tree-item"><a class="link_trash_treeview" href="deletecategory/{{item.name}}"><i class="fi-rr-trash"></i></a> {{item.name}}</div>
                 {% endif %}
             {% endfor %}
         </div>
@@ -76,15 +59,6 @@
                    <div class="align-right"> <input type="text" name="name_expense" placeholder="Name" required></div>
                 </div>
                 <div class="flex-row center-h m1r p1">
-                   <div class="m1r"> <label for="parent">Überkategorie</label></div>
-                   <div class="align-right"> <select name="parent" required>
-                        <option value="0">Keine</option>
-                        {% for category in categories_expense_select %}
-                        <option value="{{category.id}}">{{category.name}}</option>
-                        {% endfor %}
-                        </select></div>
-                </div>
-                <div class="flex-row center-h m1r p1">
                    <div class="m1r"> <label for="ignore">In Statistik ignorieren</label></div>
                    <div class="align-right"> 
                         <input type="checkbox" name="ignore">
@@ -99,18 +73,10 @@
        <!-- treeview-->
        <div class="treeview p1">
             {% for item in categories_expense_tree %}
-                {% if item.1 <= 3 %}
-                    {% if item.2 %}
-                    <div class="p1 tree-item tree{{item.1}} tree-ignore"><a class="link_trash_treeview" href="deletecategory/{{item.0}}"><i class="fi-rr-trash"></i></a> {{item.0}}</div>
-                    {% else %}
-                    <div class="p1 tree-item tree{{item.1}}"><a class="link_trash_treeview" href="deletecategory/{{item.0}}"><i class="fi-rr-trash"></i></a> {{item.0}}</div>
-                    {% endif %}
-                {%else%}
-                    {% if item.2 %}
-                    <div class="p1 tree-item tree3 tree-ignore"><a class="link_trash_treeview" href="deletecategory/{{item.0}}"><i class="fi-rr-trash"></i></a> **{{item.0}}</div>
-                    {% else %}
-                     <div class="p1 tree-item tree3"><a class="link_trash_treeview" href="deletecategory/{{item.0}}"><i class="fi-rr-trash"></i></a> **{{item.0}}</div>
-                    {% endif %}
+                {% if item.ignore %}
+                    <div class="p1 tree-item tree0 tree-ignore"><a class="link_trash_treeview" href="deletecategory/{{item.name}}"><i class="fi-rr-trash"></i></a>{{item.name}}</div>
+                {% else %}
+                    <div class="p1 tree-item tree0"><a class="link_trash_treeview" href="deletecategory/{{item.name}}"><i class="fi-rr-trash"></i></a> {{item.name}}</div>
                 {% endif %}
             {% endfor %}
         </div>
