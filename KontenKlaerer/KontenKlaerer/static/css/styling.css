@@ -212,20 +212,8 @@ input[type="file"] {
 
 /* logo-styling */
 .logo{
-    color:var(--light);
-    font-family: "Futura", sans-serif;
-}
-
-.logo-k1{
-    font-weight: bold;
-    color: var(--primary);
-    font-size: 3.5rem;
-}
-
-.logo-k2{
-    color: var(--accent);
-    font-weight: bold;
-    font-size: 3.5rem;
+    width: 100px;
+    height: 100px;
 }
 
 .logo-text{
@@ -271,7 +259,7 @@ input[type="file"] {
 /* table-styling */
 .table{
     height: 70vh;
-    width: 80vw;
+    width: 95vw;
     overflow-y: scroll;
     overflow-x: scroll;
 }
