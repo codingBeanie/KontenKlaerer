@@ -77,7 +77,7 @@ def insert_data(csv_name):
                                 amount=row[7].replace(
                                     ".", "").replace(",", "."),
                                 amount_display=row[7])
-                data.save()
+                    data.save()
         apply_assignments()
 
 
