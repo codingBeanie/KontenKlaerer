@@ -14,7 +14,7 @@ def get_statistics(expense=True, from_date=None, to_date=None):
     data = data.filter(category__ignore=False)
 
     # get periods
-    periods = get_periods(from_date, to_date)
+    periods = get_periods()
 
     # get unique categories
     categories = data.values("category").distinct()
@@ -83,7 +83,7 @@ def get_total(expense=True, from_date=None, to_date=None):
     data = data.filter(category__ignore=False)
 
     # get periods
-    periods = get_periods(from_date, to_date)
+    periods = get_periods()
 
     # starting/default values
     total = 0
@@ -118,16 +118,20 @@ def get_total(expense=True, from_date=None, to_date=None):
     return result
 
 
-def get_periods(from_date=None, to_date=None):
+def get_periods():
     data = Data.objects.all()
-    if from_date == None or to_date == None:
-        periods = data.values("month", "year").distinct()
-    else:
-        periods = data.filter(date__gte=from_date, date__lte=to_date).values(
-            "month", "year").distinct()
-    # sort by year and month
-    periods = sorted(periods, key=lambda month: month["year"])
-    periods = sorted(periods, key=lambda month: month["month"])
+    periods = data.values(
+        "month", "year").distinct()
+
+    # create month/year identifier
+    for period in periods:
+        monthValue = period["month"]
+        yearValue = period["year"] - 2000
+        dateValue = yearValue * 12 + monthValue
+        period["dateValue"] = dateValue
+
+   # sort by dateValue
+    periods = sorted(periods, key=lambda period: period["dateValue"])
     return periods
 
 
