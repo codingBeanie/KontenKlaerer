@@ -1,6 +1,8 @@
 # KontenKlärer
 Der KontenKlärer ist ein Hobby-Projekt zur Analyse von Bank-Transaktionsdaten mit einem Kategorisierungssystem. Es handelt sich hierbei um eine Webseite, auf Basis von Django. Es ist derzeit nicht geplant diese Webseite öffentlich zu hosten. 
 
+[!IMPORTANT] Es gibt ein Nachfolge-Projekt zu diesem, welches neue Funktionen und ein Redesign bietet. 
+
 ![screenshot](screenshots/screenshot1.png)
 
 ## Installation
